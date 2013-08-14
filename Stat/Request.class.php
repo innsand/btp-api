@@ -2,6 +2,7 @@
 
 class Stat_Btp_Request {
 
+	public static $timingsOnClose = false;
 	private static $obj;
 
 	public static function getLast() {
@@ -69,7 +70,7 @@ class Stat_Btp_Request {
 
 	public function close() {
 		if (!$this->conn || $this->disabled) return;
-		$this->send(true);
+		$this->send(!!self::$timingsOnClose);
 		$this->conn = null;
 		self::$obj = null;
 	}
