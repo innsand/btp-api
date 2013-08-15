@@ -3,6 +3,7 @@
 class Stat_Btp_Request {
 
 	public static $timingsOnClose = false;
+	public static $scriptTimingsPrefix = 'SCRIPT_';
 	private static $obj;
 
 	public static function getLast() {
@@ -49,7 +50,7 @@ class Stat_Btp_Request {
 		if ($timings) {
 			$new = explode(' ',file_get_contents('/proc/self/stat'));
 			$farm = preg_replace('~\d~','',$srv);
-			$this->items['SCRIPT_'.$farm][$srv] = array(
+			$this->items[self::$scriptTimingsPrefix.$farm][$srv] = array(
 				'system' => array(1000*10*($new[14]-$this->stat[14])),
 				'user' => array(1000*10*($new[13]-$this->stat[13])),
 				'all' => array(round(1000000*(microtime(true)-$this->ts))),
